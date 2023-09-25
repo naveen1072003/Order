@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
+
+.form-container{    
+    width: 212.7vh;
+    font-family: 'Nunito';
+    height: 100vh;
+    background: url("/src/images/login_back.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner-container{
+    width: 35rem;
+    height: 40rem;
+    margin-right: 24rem;
+    background-color: aliceblue;
+    border-radius: 2rem;
+    box-shadow:rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.form-data{
+    padding-top: 12%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.form-data p{
+    color:rgb(138, 79, 155);
+
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+
+}
+.form-data input{
+    text-decoration: none;
+    font-size: 24px;
+    padding: 1rem 2rem;
+    margin-top: 10%;
+    border: none;
+    border-radius: 2rem;
+    box-shadow:rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px ;
+}
+
+.inner-container button{
+    margin: 10% 0 0 41%;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem; 
+    background-color: rgb(138, 79, 155);
+    color: rgb(226, 225, 225);
+    padding: 10px 20px;
+}
+
+.inner-container button:hover{
+    background-color: rgb(226, 225, 225);
+    color:rgb(138, 79, 155);
+    box-shadow:rgb(138, 79, 155) 0px 50px 100px -20px, rgb(138, 79, 155) 0px 30px 60px -30px, rgb(138, 79, 155) 0px -2px 6px 0px ;
+
+}
+.inner-container .newUser{
+    margin: 6% 0 0 32%;
+    text-decoration: none;
+}

@@ -1,0 +1,1 @@
+export const authUser_Url  = "http://localhost:8080/api/v1/customer/login"
