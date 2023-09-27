@@ -19,15 +19,13 @@ function Login() {
     });
     localStorage.setItem("jwtToken",response.data);
     if(response.status ===  200)
-       navigate("/Home", { replace: true})
-
-    console.log(response.data);
+       navigate("/HomePage", { replace: true})
   };
 
   function OnchangeCall(e) {
     setLoginDetails((loginDetails) => ({
       ...loginDetails,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   }
   console.log(loginDetails);
