@@ -6,20 +6,17 @@ function Imagesrc() {
     file: null,
   });
 
-  const [dataUri, setRetrievedImage] = useState(null);
+  const [retrievedImage, setRetrievedImage] = useState(null);
 
-  useEffect(() => {
-    // Fetch the image from the backend when the component mounts
-    fetchImage();
-  }, []);
+
 
   const fetchImage = async () => {
     try {
       const response = await axios.get("http://localhost:8080/sample/getImage");
       const { imageData } = response.data; // Assuming the response contains image data as a byte array
-
       // Create a Blob from the byte array
-      const blob = new Blob([imageData], { type: "image/jpeg" }); // Specify the MIME type
+      const blob = new Blob([imageData], { type: "image/png" }); // Specify the MIME type
+
 
       // Create a data URI from the Blob
       const dataUri = URL.createObjectURL(blob);
@@ -27,10 +24,16 @@ function Imagesrc() {
       // Set the data URI in the state
       setRetrievedImage(dataUri);
       console.log(dataUri);
+
+
     } catch (e) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    fetchImage();
+  }, []);
 
   const apiCall = async () => {
     try {
@@ -62,7 +65,7 @@ function Imagesrc() {
 
   return (
     <div className="">
-      <img src={dataUri} alt="logo" width={20} height={100} />
+      <img src={retrievedImage} alt="logo" />
       <input type="file" name="file" id="" onChange={Onchange} />
       <button type="submit" onClick={apiCall}>
         Submit
