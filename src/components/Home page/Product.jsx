@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Product.css"
-import { addCategories_Url, deleteProduct_Url, editProduct_Url, getAllProducts_Url } from "../constraints/apiUrl";
+import "./Product.css";
+import {
+  addCategories_Url,
+  deleteProduct_Url,
+  editProduct_Url,
+  getAllCategories_Url,
+  getAllProducts_Url,
+} from "../constraints/apiUrl";
 import { useNavigate } from "react-router-dom";
 
 function ProductForm() {
-
   const navigate = useNavigate();
-
 
   const [product, setProduct] = useState({
     prod_name: "",
@@ -19,8 +23,10 @@ function ProductForm() {
   });
 
   const [category, setCategory] = useState({
-    categoryName: ""
+    categoryName: "",
   });
+
+  const [allCategories, setallCategories] = useState({});
 
   const [prodList, setProductList] = useState([]);
   const [editDetails, setEditDetails] = useState({});
@@ -34,12 +40,12 @@ function ProductForm() {
   const [isEditForm, setEditForm] = useState(false);
 
   const headers = {
-    Authorization: "Bearer " + localStorage.getItem("jwtToken")
-  }
+    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+  };
 
   const CategoryChange = (e) => {
     setCategory({
-      categoryName: e.target.value
+      categoryName: e.target.value,
     });
   };
 
@@ -58,26 +64,24 @@ function ProductForm() {
     });
   };
 
-
   const getAllProducts = async () => {
     try {
-      const response = await axios.get(getAllProducts_Url,
-        {
-          headers
-        })
-      setProductList(response.data)
+      const response = await axios.get(getAllProducts_Url, {
+        headers,
+      });
+      setProductList(response.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   console.log(prodList);
   useEffect(() => {
-    getAllProducts()
+    getAllProducts();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    resetForm()
+    resetForm();
     try {
       const formData = new FormData();
       formData.append("file", product.prod_image);
@@ -89,10 +93,11 @@ function ProductForm() {
 
       console.log(product);
       await axios.post(
-        "http://localhost:8080/api/v1/products/addProducts", formData, {
-        headers
-      }
-
+        "http://localhost:8080/api/v1/products/addProducts",
+        formData,
+        {
+          headers,
+        }
       );
       console.log("Product added successfully!");
     } catch (error) {
@@ -104,7 +109,7 @@ function ProductForm() {
   const add_EditApi = async (e) => {
     try {
       if (!isEditForm) {
-        handleSubmit(e)
+        handleSubmit(e);
       } else {
         const putresponse = await axios.put(
           editProduct_Url,
@@ -126,8 +131,7 @@ function ProductForm() {
   const deleteApi = async (id) => {
     try {
       console.log(id);
-      await axios.delete(deleteProduct_Url + id,
-        { headers });
+      await axios.delete(deleteProduct_Url + id, { headers });
       setIsDelete(false);
     } catch (e) {
       console.log(e);
@@ -139,24 +143,49 @@ function ProductForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(addCategories_Url, { ...category }, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwtToken")
+      const response = await axios.post(
+        addCategories_Url,
+        { ...category },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
         }
-      });
+      );
       console.log(category);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  //getAllCategory
+
+  const getAllCategories = async () => {
+    try {
+      const response = await axios.get(getAllCategories_Url, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+        },
+      });
+      console.log(response.data);
+      setallCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const resetForm = () => {
     // setEditDetails({});
     // setEditForm(false);
     console.log("hi");
-    setCatFormVisibile(false)
+    setCatFormVisibile(false);
     setFormVisibile(false);
   };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   useEffect(() => {
     getAllProducts();
   }, [isFormVisible, isCatFormVisible, isEditForm]);
@@ -164,158 +193,196 @@ function ProductForm() {
   let i = 1;
   return (
     <>
-      <div className="add-buttons">
-        <button type="submit" onClick={() => setFormVisibile(true)}>Add Products</button>
-        <button type="submit" onClick={() => setCatFormVisibile(true)}>Add new Category</button>
-
-      </div>
-      {isFormVisible && (
-        <form onSubmit={handleSubmit}>
-          <div className="product-form">
-            <div>
-              <h2>Add Products</h2>
-              <button type="submit" className="btnrst" onClick={resetForm}>
-                <i className="fas fa-times"></i>
-              </button>
+      <div className="product">
+        <div className="add-buttons">
+          <button type="submit" onClick={() => setFormVisibile(true)}>
+            Add Products
+          </button>
+          <button type="submit" onClick={() => setCatFormVisibile(true)}>
+            Add new Category
+          </button>
+        </div>
+        {isFormVisible && (
+          <div className="form-blur">
+          <form onSubmit={handleSubmit}>
+            <div className="product-form">
+              <div className="prod-heading">
+                <h2>Add Products</h2>
+                <button type="submit" className="btnrst" onClick={resetForm}>
+                  <i className="fas fa-times"></i>
+                </button>
               </div>
-            <div>
-              <label htmlFor="prod_name">Product Name:</label>
-              <input
-                type="text"
-                id="prod_name"
-                name="prod_name"
-                value={product.prod_name}
-                onChange={handleInputChange}
-              />
+              <div className="form-inputs">
+                <label htmlFor="prod_name">Product Name:</label>
+                <input
+                  type="text"
+                  id="prod_name"
+                  name="prod_name"
+                  value={product.prod_name}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="prod_image">Product Image:</label>
+                <input
+                  type="file"
+                  id="prod_image"
+                  name="prod_image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="prod_desc">Product Description:</label>
+                <input
+                  type="text"
+                  id="prod_desc"
+                  name="prod_desc"
+                  value={product.prod_desc}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="prod_price">Product Price:</label>
+                <input
+                  type="text"
+                  id="prod_price"
+                  name="prod_price"
+                  value={product.prod_price}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="prod_category">Product Category:</label>
+                <select
+                  name="prod_category"
+                  id="prod_category"
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="-">-</option>
+                  {allCategories &&
+                    allCategories.map((category) => {
+                      return (
+                        <option value={category.categoryName}>
+                          {category.categoryName}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="quantity">Quantity:</label>
+                <input
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  value={product.quantity}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="sub-btn">
+              <button type="submit">Add Product</button>
+              </div>
             </div>
-            <div>
-              <label htmlFor="prod_image">Product Image:</label>
-              <input
-                type="file"
-                id="prod_image"
-                name="prod_image"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="prod_desc">Product Description:</label>
-              <input
-                type="text"
-                id="prod_desc"
-                name="prod_desc"
-                value={product.prod_desc}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="prod_price">Product Price:</label>
-              <input
-                type="text"
-                id="prod_price"
-                name="prod_price"
-                value={product.prod_price}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="prod_category">Product Category:</label>
-              <input
-                type="text"
-                id="prod_category"
-                name="prod_category"
-                value={product.category}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="quantity">Quantity:</label>
-              <input
-                type="text"
-                id="quantity"
-                name="quantity"
-                value={product.quantity}
-                onChange={handleInputChange}
-              />
-            </div>
-            <button type="submit">Add Product</button>
+          </form>
           </div>
-        </form>
-      )}
-      {isCatFormVisible && (
-        <form onSubmit={handleCategorySubmit}>
-          <div className="category-form">
-            <h3>Add Category</h3>
-            <div>
-              <label htmlFor="category">Enter the Category:</label>
-              <input type="text" name="category" id="category" onChange={CategoryChange} />
-            </div>
-            <button type="submit">  Submit  </button>
+        )}
+        {isCatFormVisible && (
+          <div className="category-blur">
+            <form onSubmit={handleCategorySubmit}>
+              <div className="category-form">
+                <div className="cat-heading">
+                <h3>Add Category</h3>
+                <button type="submit" className="btnrst" onClick={resetForm}>
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+                <div className="catg-input">
+                  <label htmlFor="category">Enter the Category:</label>
+                  <input
+                    type="text"
+                    name="category"
+                    id="category"
+                    onChange={CategoryChange}
+                  />
+                </div>
+                <div className="subt-btn">
+                <button type="submit"> Submit </button>
+                </div>  
+              </div>
+            </form>
           </div>
-        </form>
-      )}
+        )}
 
-      {/* ==================  */}
-      <div className="table-details">
-        <table>
-          <th>S.No</th>
-          <th>Product Image</th>
-          <th>Product Name</th>
-          <th>Description</th>
-          <th>Product Category</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Edit / Delete</th>
-          <tbody>
-            {/* {console.log(userList.content,"singam")} */}
-            {prodList &&
-              prodList.map((product) => {
-                return (
-                  <tr>
-                    <td>{i++}</td>
-                    <td><img src={"data:image/png;base64," + product.prod_image} alt="" width={50} /></td>
-                    <td>{product.prod_name}</td>
-                    <td>{product.prod_desc}</td>
-                    <td>{product.category.categoryName}</td>
-                    <td>{product.prod_price}</td>
-                    <td>{product.quantity}</td>
-                    <td className="action-buttons">
-                      <button className="edit" value={product.id}>
-                        <i
-                          className="material-icons"
-                          data-toggle="tooltip"
-                          title="Edit"
+        {/* ==================  */}
+        <div className="table-details">
+          <table>
+            <th>S.No</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Product Category</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Edit / Delete</th>
+            <tbody>
+              {/* {console.log(userList.content,"singam")} */}
+              {prodList &&
+                prodList.map((product) => {
+                  return (
+                    <tr>
+                      <td>{i++}</td>
+                      <td>
+                        <img
+                          src={"data:image/png;base64," + product.prod_image}
+                          alt=""
+                          width={50}
+                        />
+                      </td>
+                      <td>{product.prod_name}</td>
+                      <td>{product.prod_desc}</td>
+                      <td>{product.category.categoryName}</td>
+                      <td>{product.prod_price}</td>
+                      <td>{product.quantity}</td>
+                      <td className="action-buttons">
+                        <button className="edit" value={product.id}>
+                          <i
+                            className="material-icons"
+                            data-toggle="tooltip"
+                            title="Edit"
+                            onClick={() => {
+                              setEditForm(true);
+                              setEditDetails(product);
+                              setFormVisibile(true);
+                            }}
+                          >
+                            &#xE254;
+                          </i>
+                        </button>
+                        <button
+                          className="delete"
                           onClick={() => {
-                            setEditForm(true);
-                            setEditDetails(product);
-                            setFormVisibile(true);
+                            deleteApi(product.id);
+                            setIsDelete(true);
                           }}
+                          type="submit"
                         >
-                          &#xE254;
-                        </i>
-                      </button>
-                      <button
-                        className="delete"
-                        onClick={() => {
-                          deleteApi(product.id);
-                          setIsDelete(true);
-                        }}
-                        type="submit"
-                      >
-                        <i
-                          className="material-icons"
-                          data-toggle="tooltip"
-                          title="Delete"
-                        >
-                          &#xE872;
-                        </i>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+                          <i
+                            className="material-icons"
+                            data-toggle="tooltip"
+                            title="Delete"
+                          >
+                            &#xE872;
+                          </i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

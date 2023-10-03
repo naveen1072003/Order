@@ -11,50 +11,35 @@ body{
     background-color: rgb(226, 225, 225);
 
 }
-.navbar{
-    width: 100%;
-    height: 6rem;
-    background: rgb(138, 79, 155);
-}
-.nav-logo {
+.sections{
     display: flex;
-}
-.nav-logo ul{
-    width: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-family: 'Nunito';
     flex-direction: row;
-    list-style: none;
-    margin:1% 0 0 40%;    
-    font-size: 18px;
-    font-weight: 700;
-    color: white;
+    column-gap: 2rem;
+    margin-bottom: 2rem;
 }
-.nav-logo ul li{
-    padding-right: 3rem;
-}
-.logout{
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 10px 15px;
-    background-color: aliceblue;
-    color: rgb(138, 79, 155);;
-}
-.nav-logo img{
-    width: 150px;
-    height: 60px;
-    padding: 1% 0 0 5%;
-}
+.all, .frames, .lens, .uvglass{
+    cursor: pointer;
 
+}
+.active{
+    cursor: pointer;
+    color: rgb(138, 79, 155);
+    font-size: 22px;
+    font-weight: 700;
+    border-bottom: 2px solid ;
+}
 .products{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
+    row-gap: 2rem;
 }
 
-.prod p{
+.heading p{
     color: rgb(138, 79, 155);
     font-size: 42px;
     font-weight: 800;

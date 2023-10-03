@@ -1,20 +1,79 @@
+.add-buttons{
+    padding: 2%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    flex-direction: row;
+}
+.add-buttons button{
+    font-size: 18px;
+    margin-right:5px;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem; 
+    background-color: rgb(138, 79, 155);
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+}
+
+.product {
+    position: relative;
+    
+}
+
+.prod-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-blur{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.2);
+
+}
+.form-inputs{
+    width: 100%;
+}
+.form-inputs input{
+    font-size: 18px;
+}
+.sub-btn button{
+    margin: 0 0 0 30%;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem; 
+    background-color: rgb(218, 213, 221);
+    color: rgb(189, 94, 240);
+    padding: 10px 20px;
+}
+.prod-heading button{
+    margin-left: 50%;
+}
 .product-form{
     display: grid;
-    align-items: center;
     justify-content: center;
-    background-color: rgb(197, 107, 212);
+    align-items: center;
     height: 60vh;
-    width: 700px;
-    margin: 8% 30% 0 26%;
-    position: absolute;
-    /* opacity: 0.9; */
-}
-.table-details{
+    width: 30vw;
     position: relative;
-    /* background-color: aqua; */
-    /* width: 100%; */
+    background-color: rgba(197, 107, 212,1);
+    z-index: 1;
 }
+.product-form .form-inputs input{
+    justify-content: right;
+}
+
 .table-details table{
+    margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -22,14 +81,58 @@
 .table-details table tbody tr{
     text-align: center;
 }
-.category-form{
-    background-color: blue;
-    padding: 2%;
-    display: grid;
+.category-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+}
+.category-form{
+    background-color: rgba(197, 107, 212,1);
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    width: 30%;
-    /* position: absolute; */
+    height: 35vh;
+    width: 30vw;
+    z-index: 1;
+    font-size: 18px;
+
+}
+.category-form input{
+    font-size: 18px;
+}
+.cat-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cat-heading h3{
+    margin-right: 45%;
+}
+.cat-heading button{
+    margin-left: 30%;
+}
+.catg-input{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.subt-btn button{
+    margin: 25% 0 0 10%;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem; 
+    background-color: rgb(255, 255, 255);
+    color: rgb(189, 94, 240);
+    padding: 10px 20px;
 }

@@ -1,0 +1,43 @@
+.navbar{
+    width: 100%;
+    height: 6rem;
+    background: rgb(138, 79, 155);
+    
+}
+.nav-logo {
+    display: flex;
+}
+.nav-logo ul{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    list-style: none;
+    margin:1% 0 0 45%;    
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+
+}
+.nav-logo ul li{
+    padding-right: 2rem;
+}
+.cart-nav{
+    text-decoration: none;
+    color: white;
+}
+.logout{
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 15px;
+    background-color: aliceblue;
+    color: rgb(138, 79, 155);;
+}
+.nav-logo img{
+    width: 150px;
+    height: 60px;
+    padding: 1% 0 0 5%;
+}

@@ -20,12 +20,12 @@ function Login() {
     });
     if(response.status === 200){
       localStorage.setItem("jwtToken", response.data);
-      navigate("/HomePage", { replace: true })
+      navigate("/Home", { replace: true })
     }
   }
   catch(e){
     window.alert("You have entered wrong password!!!")
-    navigate("/", { replace: true })
+    navigate("/login", { replace: true })
      console.log(e);
   }
     

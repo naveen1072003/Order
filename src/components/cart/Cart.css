@@ -9,23 +9,33 @@
     background-color: bisque;
     width: 70%;
     height: 70vh;
-    padding-left: 10%;
 }
+
 .product-lists{
     display: flex;
-    justify-content: left;
-    align-items: left;
+    justify-content: center;
+}
+.product-wrapper{
+    position: relative;
+    top: 5%;
+    width: 95%;
+    min-height: 30vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: aliceblue;
 }
 .prouct-image{
-    margin: 10% 0 0 0;
-
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .prod-details{
-    margin: 10% 0 0 20%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center
+  width: 65%;
+  display: grid;
+  align-items: start;
+  justify-content: flex-start;
+  padding-top: 2%;
 }
 .buy-container{
     background-color: rgb(237, 255, 196);

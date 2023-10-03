@@ -1,8 +1,9 @@
 import './App.css';
+import ProductForm from './components/Home page/Product';
+import Home from './components/Home page/Home';
+import Login from './components/Login/Login';
 import Cart from './components/cart/Cart';
-import Home from './components/home page/Home';
-import ProductForm from './components/home page/Product';
-import Login from './components/login/Login';
+
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         {isAuthenticated ? (
           <>
-            <Route path='/homePage' element={<Home />} />
+            <Route path='/Home' element={<Home />} />
             {/* <Route path='*' element={<Login />} /> */}
             <Route path='/admin' element={<ProductForm />} />
             <Route path='/cart' element={<Cart />} />
@@ -23,8 +24,8 @@ function App() {
         ) : (
           <>
             <Route path='*' element={<Login />} />
-            <Route path='/' element={<Login />} />
-            <Route path='/homePage' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/Home' element={<Home />} />
           </>
         )}
       </Routes>
