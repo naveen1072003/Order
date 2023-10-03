@@ -1,17 +1,33 @@
 import './App.css';
-import Home from './components/Home page/Home';
-import ProductForm from './components/Home page/Product';
-import Login from './components/Login/Login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Cart from './components/cart/Cart';
+import Home from './components/home page/Home';
+import ProductForm from './components/home page/Product';
+import Login from './components/login/Login';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
+  const jwtToken = localStorage.getItem("jwtToken");
+  const isAuthenticated = jwtToken !== null;
+  console.log(isAuthenticated);
   return (
     <BrowserRouter>
-    <Routes>
-    <Route path='/' element={<Login/>} />
-    <Route path='/HomePage' element={< Home />} />
-    <Route path='/Img' element={< ProductForm />} />
-    </Routes>
+      <Routes>
+        {isAuthenticated ? (
+          <>
+            <Route path='/homePage' element={<Home />} />
+            {/* <Route path='*' element={<Login />} /> */}
+            <Route path='/admin' element={<ProductForm />} />
+            <Route path='/cart' element={<Cart />} />
+            {/* Add a default route for unmatched paths */}
+          </>
+        ) : (
+          <>
+            <Route path='*' element={<Login />} />
+            <Route path='/' element={<Login />} />
+            <Route path='/homePage' element={<Home />} />
+          </>
+        )}
+      </Routes>
     </BrowserRouter>
   );
 }

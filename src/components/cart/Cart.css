@@ -1,0 +1,34 @@
+.cart-container{
+    min-width: 50vw;
+    width: auto;
+    min-height: 70vh;
+    height: auto;
+    display: flex;
+}
+.cart-products{
+    background-color: bisque;
+    width: 70%;
+    height: 70vh;
+    padding-left: 10%;
+}
+.product-lists{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+}
+.prouct-image{
+    margin: 10% 0 0 0;
+
+}
+.prod-details{
+    margin: 10% 0 0 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center
+}
+.buy-container{
+    background-color: rgb(237, 255, 196);
+    width: 40%;
+    height: 70vh;
+}

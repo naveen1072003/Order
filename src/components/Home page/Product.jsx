@@ -1,14 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./Product.css"
+import { addCategories_Url, deleteProduct_Url, editProduct_Url, getAllProducts_Url } from "../constraints/apiUrl";
+import { useNavigate } from "react-router-dom";
 
 function ProductForm() {
+
+  const navigate = useNavigate();
+
+
   const [product, setProduct] = useState({
     prod_name: "",
     prod_image: null,
     prod_desc: "",
     prod_price: "",
+    prod_category: "",
     quantity: "",
   });
+
+  const [category, setCategory] = useState({
+    categoryName: ""
+  });
+
+  const [prodList, setProductList] = useState([]);
+  const [editDetails, setEditDetails] = useState({});
+
+  const [isDelete, setIsDelete] = useState(false);
+
+  // console.log(addFormDetails, "=====================");
+  // console.log(editDetails, "??????????????????");
+  const [isFormVisible, setFormVisibile] = useState(false);
+  const [isCatFormVisible, setCatFormVisibile] = useState(false);
+  const [isEditForm, setEditForm] = useState(false);
+
+  const headers = {
+    Authorization: "Bearer " + localStorage.getItem("jwtToken")
+  }
+
+  const CategoryChange = (e) => {
+    setCategory({
+      categoryName: e.target.value
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,87 +58,266 @@ function ProductForm() {
     });
   };
 
+
+  const getAllProducts = async () => {
+    try {
+      const response = await axios.get(getAllProducts_Url,
+        {
+          headers
+        })
+      setProductList(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(prodList);
+  useEffect(() => {
+    getAllProducts()
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    resetForm()
     try {
       const formData = new FormData();
-    //   formData.append("file", product.prod_image);
+      formData.append("file", product.prod_image);
+      formData.append("prod_name", product.prod_name);
+      formData.append("prod_desc", product.prod_desc);
+      formData.append("prod_price", product.prod_price);
+      formData.append("prod_category", product.prod_category);
+      formData.append("quantity", product.quantity);
 
-      // Convert the product object to JSON and append it as a form field
-    //   formData.append("productDetails", product);
-
+      console.log(product);
       await axios.post(
-        "http://localhost:8080/api/v1/products/addProducts",
-          product,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        "http://localhost:8080/api/v1/products/addProducts", formData, {
+        headers
+      }
 
-      // Clear the form or perform other actions upon successful submission
+      );
       console.log("Product added successfully!");
     } catch (error) {
       console.error("Error adding product: ", error);
     }
   };
 
+  // Add Or Edit Product
+  const add_EditApi = async (e) => {
+    try {
+      if (!isEditForm) {
+        handleSubmit(e)
+      } else {
+        const putresponse = await axios.put(
+          editProduct_Url,
+          {
+            ...editDetails,
+          },
+          { headers }
+        );
+      }
+      setEditForm(false);
+      setFormVisibile(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setEditDetails({});
+  };
+
+  // Delete Product
+  const deleteApi = async (id) => {
+    try {
+      console.log(id);
+      await axios.delete(deleteProduct_Url + id,
+        { headers });
+      setIsDelete(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // Add Category
+  const handleCategorySubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(addCategories_Url, { ...category }, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken")
+        }
+      });
+      console.log(category);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const resetForm = () => {
+    // setEditDetails({});
+    // setEditForm(false);
+    console.log("hi");
+    setCatFormVisibile(false)
+    setFormVisibile(false);
+  };
+  useEffect(() => {
+    getAllProducts();
+  }, [isFormVisible, isCatFormVisible, isEditForm]);
+
+  let i = 1;
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="prod_name">Product Name:</label>
-        <input
-          type="text"
-          id="prod_name"
-          name="prod_name"
-          value={product.prod_name}
-          onChange={handleInputChange}
-        />
+    <>
+      <div className="add-buttons">
+        <button type="submit" onClick={() => setFormVisibile(true)}>Add Products</button>
+        <button type="submit" onClick={() => setCatFormVisibile(true)}>Add new Category</button>
+
       </div>
-      <div>
-        <label htmlFor="prod_image">Product Image:</label>
-        <input
-          type="file"
-          id="prod_image"
-          name="prod_image"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+      {isFormVisible && (
+        <form onSubmit={handleSubmit}>
+          <div className="product-form">
+            <div>
+              <h2>Add Products</h2>
+              <button type="submit" className="btnrst" onClick={resetForm}>
+                <i className="fas fa-times"></i>
+              </button>
+              </div>
+            <div>
+              <label htmlFor="prod_name">Product Name:</label>
+              <input
+                type="text"
+                id="prod_name"
+                name="prod_name"
+                value={product.prod_name}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="prod_image">Product Image:</label>
+              <input
+                type="file"
+                id="prod_image"
+                name="prod_image"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="prod_desc">Product Description:</label>
+              <input
+                type="text"
+                id="prod_desc"
+                name="prod_desc"
+                value={product.prod_desc}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="prod_price">Product Price:</label>
+              <input
+                type="text"
+                id="prod_price"
+                name="prod_price"
+                value={product.prod_price}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="prod_category">Product Category:</label>
+              <input
+                type="text"
+                id="prod_category"
+                name="prod_category"
+                value={product.category}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="quantity">Quantity:</label>
+              <input
+                type="text"
+                id="quantity"
+                name="quantity"
+                value={product.quantity}
+                onChange={handleInputChange}
+              />
+            </div>
+            <button type="submit">Add Product</button>
+          </div>
+        </form>
+      )}
+      {isCatFormVisible && (
+        <form onSubmit={handleCategorySubmit}>
+          <div className="category-form">
+            <h3>Add Category</h3>
+            <div>
+              <label htmlFor="category">Enter the Category:</label>
+              <input type="text" name="category" id="category" onChange={CategoryChange} />
+            </div>
+            <button type="submit">  Submit  </button>
+          </div>
+        </form>
+      )}
+
+      {/* ==================  */}
+      <div className="table-details">
+        <table>
+          <th>S.No</th>
+          <th>Product Image</th>
+          <th>Product Name</th>
+          <th>Description</th>
+          <th>Product Category</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Edit / Delete</th>
+          <tbody>
+            {/* {console.log(userList.content,"singam")} */}
+            {prodList &&
+              prodList.map((product) => {
+                return (
+                  <tr>
+                    <td>{i++}</td>
+                    <td><img src={"data:image/png;base64," + product.prod_image} alt="" width={50} /></td>
+                    <td>{product.prod_name}</td>
+                    <td>{product.prod_desc}</td>
+                    <td>{product.category.categoryName}</td>
+                    <td>{product.prod_price}</td>
+                    <td>{product.quantity}</td>
+                    <td className="action-buttons">
+                      <button className="edit" value={product.id}>
+                        <i
+                          className="material-icons"
+                          data-toggle="tooltip"
+                          title="Edit"
+                          onClick={() => {
+                            setEditForm(true);
+                            setEditDetails(product);
+                            setFormVisibile(true);
+                          }}
+                        >
+                          &#xE254;
+                        </i>
+                      </button>
+                      <button
+                        className="delete"
+                        onClick={() => {
+                          deleteApi(product.id);
+                          setIsDelete(true);
+                        }}
+                        type="submit"
+                      >
+                        <i
+                          className="material-icons"
+                          data-toggle="tooltip"
+                          title="Delete"
+                        >
+                          &#xE872;
+                        </i>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </div>
-      <div>
-        <label htmlFor="prod_desc">Product Description:</label>
-        <input
-          type="text"
-          id="prod_desc"
-          name="prod_desc"
-          value={product.prod_desc}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="prod_price">Product Price:</label>
-        <input
-          type="text"
-          id="prod_price"
-          name="prod_price"
-          value={product.prod_price}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="text"
-          id="quantity"
-          name="quantity"
-          value={product.quantity}
-          onChange={handleInputChange}
-        />
-      </div>
-      <button type="submit">Add Product</button>
-    </form>
+    </>
   );
 }
 

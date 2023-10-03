@@ -1,0 +1,35 @@
+.product-form{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(197, 107, 212);
+    height: 60vh;
+    width: 700px;
+    margin: 8% 30% 0 26%;
+    position: absolute;
+    /* opacity: 0.9; */
+}
+.table-details{
+    position: relative;
+    /* background-color: aqua; */
+    /* width: 100%; */
+}
+.table-details table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+.table-details table tbody tr{
+    text-align: center;
+}
+.category-form{
+    background-color: blue;
+    padding: 2%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    /* position: absolute; */
+}

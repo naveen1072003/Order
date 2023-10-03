@@ -14,12 +14,21 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    const response = await axios.post(authUser_Url,{
-        ...loginDetails
+    try{
+    const response = await axios.post(authUser_Url, {
+      ...loginDetails
     });
-    localStorage.setItem("jwtToken",response.data);
-    if(response.status ===  200)
-       navigate("/HomePage", { replace: true})
+    if(response.status === 200){
+      localStorage.setItem("jwtToken", response.data);
+      navigate("/HomePage", { replace: true })
+    }
+  }
+  catch(e){
+    window.alert("You have entered wrong password!!!")
+    navigate("/", { replace: true })
+     console.log(e);
+  }
+    
   };
 
   function OnchangeCall(e) {
@@ -34,11 +43,11 @@ function Login() {
       <div className="inner-container">
         <div className="form-data">
           <p>Sign in</p>
-          <input 
-          type="email" 
-          name="email" 
-          id="email" 
-          onChange={OnchangeCall} 
+          <input
+            type="email"
+            name="email"
+            id="email"
+            onChange={OnchangeCall}
           />
           <input
             type="text"

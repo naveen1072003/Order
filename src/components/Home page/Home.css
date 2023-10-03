@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
+body{
+    font-family: 'Nunito';
+
+}
 
 .container{
     font-family: 'Nunito';
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
     background-color: rgb(226, 225, 225);
 
 }
@@ -22,12 +27,21 @@
     flex-direction: row;
     list-style: none;
     margin:1% 0 0 40%;    
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: white;
 }
 .nav-logo ul li{
     padding-right: 3rem;
+}
+.logout{
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 15px;
+    background-color: aliceblue;
+    color: rgb(138, 79, 155);;
 }
 .nav-logo img{
     width: 150px;
