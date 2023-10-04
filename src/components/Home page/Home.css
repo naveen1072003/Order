@@ -64,6 +64,12 @@ body{
     width: 16rem;
     height: 8rem;
 }  
+.prod_img{
+    transition: transform .4s ease-in;
+}
+.prod_img:hover{
+    transform: scale(1.2);
+}
 .product-details{
     display: flex;
     flex-direction: column;

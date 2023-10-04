@@ -1,10 +1,11 @@
 import './App.css';
-import ProductForm from './components/Home page/Product';
-import Home from './components/Home page/Home';
-import Login from './components/Login/Login';
+import ProductForm from './components/home page/Admin';
+import Home from './components/home page/Home';
+import Login from './components/login/Login';
 import Cart from './components/cart/Cart';
 
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import ProductDetails from './components/singleView/ProductDetails';
 
 function App() {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -23,6 +24,7 @@ function App() {
           </>
         ) : (
           <>
+            <Route path='/singleview' element={<ProductDetails/>}/>
             <Route path='*' element={<Login />} />
             <Route path='/login' element={<Login />} />
             <Route path='/Home' element={<Home />} />

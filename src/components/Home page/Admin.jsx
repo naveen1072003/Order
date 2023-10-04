@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Product.css";
+import "./Admin.css";
 import {
   addCategories_Url,
   deleteProduct_Url,
   editProduct_Url,
   getAllCategories_Url,
   getAllProducts_Url,
+  getProducts_Url,
 } from "../constraints/apiUrl";
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +39,7 @@ function ProductForm() {
   const [isFormVisible, setFormVisibile] = useState(false);
   const [isCatFormVisible, setCatFormVisibile] = useState(false);
   const [isEditForm, setEditForm] = useState(false);
+  const [isAddStaff, setStaffFormVisibile] = useState(false);
 
   const headers = {
     Authorization: "Bearer " + localStorage.getItem("jwtToken"),
@@ -66,7 +68,7 @@ function ProductForm() {
 
   const getAllProducts = async () => {
     try {
-      const response = await axios.get(getAllProducts_Url, {
+      const response = await axios.get(getProducts_Url, {
         headers,
       });
       setProductList(response.data);
@@ -201,10 +203,12 @@ function ProductForm() {
           <button type="submit" onClick={() => setCatFormVisibile(true)}>
             Add new Category
           </button>
+          <button type="submit" onClick={() => setStaffFormVisibile(true)}>
+            Add new Staff
+          </button>
         </div>
         {isFormVisible && (
           <div className="form-blur">
-          <form onSubmit={handleSubmit}>
             <div className="product-form">
               <div className="prod-heading">
                 <h2>Add Products</h2>
@@ -282,15 +286,13 @@ function ProductForm() {
                 />
               </div>
               <div className="sub-btn">
-              <button type="submit">Add Product</button>
+              <button type="submit" onClick={handleSubmit}>Add Product</button>
               </div>
             </div>
-          </form>
           </div>
         )}
         {isCatFormVisible && (
           <div className="category-blur">
-            <form onSubmit={handleCategorySubmit}>
               <div className="category-form">
                 <div className="cat-heading">
                 <h3>Add Category</h3>
@@ -308,10 +310,9 @@ function ProductForm() {
                   />
                 </div>
                 <div className="subt-btn">
-                <button type="submit"> Submit </button>
+                <button type="submit" onClick={handleCategorySubmit}> Submit </button>
                 </div>  
               </div>
-            </form>
           </div>
         )}
 

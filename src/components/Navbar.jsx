@@ -8,8 +8,8 @@ function Navbar(){
     const navigate = useNavigate();
 
     const setLogout = () => {
-        localStorage.removeItem("jwtToken");
-        navigate("/login", { replace: true });
+      navigate("/login", { replace: true });
+      localStorage.removeItem("jwtToken");
       };
 
     return(

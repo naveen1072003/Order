@@ -15,6 +15,7 @@ function Home() {
   // const [uvglass, setUVglass] = useState(true);
   // console.log(categ);
   const getAllProducts = async () => {
+    console.log(category);
     try {
       const response = await axios.get(getAllProducts_Url + category, {
         headers: {
@@ -22,19 +23,21 @@ function Home() {
         },
       });
       setProductList(response.data);
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
     }
   };
   console.log(prodList);
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [category]);
 
   function displayProd(num) {
     if (num === 1) {
       setheadStyle({ head: "all" });
       setCateg("Pre-Designed");
+
       // setpreDesign(true);
       // setframes(false);
       // setLens(false);
@@ -86,16 +89,15 @@ function Home() {
           >
             Frames
           </p>
-          <p
+          {/* <p
             className={`lens ${headStyle.head === "lens" ? "active" : ""}`}
             onClick={() => displayProd(3)}
           >
             Lens
-          </p>
+          </p> */}
           <p
-            className={`uvglass ${
-              headStyle.head === "uvglass" ? "active" : ""
-            }`}
+            className={`uvglass ${headStyle.head === "uvglass" ? "active" : ""
+              }`}
             onClick={() => displayProd(4)}
           >
             UV Glasses
@@ -105,7 +107,9 @@ function Home() {
       <div className="products">
         {prodList.map((product) => (
           <div className="product-box">
+            <div className="prod_img">
             <img src={"data:image/png;base64," + product.prod_image} alt="" />
+            </div>
             <div className="product-details">
               <div className="details">
                 <label htmlFor="rty">
