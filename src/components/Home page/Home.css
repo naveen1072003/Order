@@ -59,6 +59,10 @@ body{
     align-items: center;
     padding: 1.5rem;
     gap: 2rem;
+    
+}
+.product-box a {
+    text-decoration: none;
 }
 .product-box img{
     width: 16rem;
@@ -76,6 +80,7 @@ body{
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    color: black;
 } 
 .details{
     display: flex;

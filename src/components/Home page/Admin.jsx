@@ -19,9 +19,14 @@ function ProductForm() {
     prod_image: null,
     prod_desc: "",
     prod_price: "",
+    modelNo: "",
+    frameWidth: "125mm",
+    frameColor: "Black",
     prod_category: "",
     quantity: "",
   });
+
+  console.log(product);
 
   const [category, setCategory] = useState({
     categoryName: "",
@@ -34,8 +39,6 @@ function ProductForm() {
 
   const [isDelete, setIsDelete] = useState(false);
 
-  // console.log(addFormDetails, "=====================");
-  // console.log(editDetails, "??????????????????");
   const [isFormVisible, setFormVisibile] = useState(false);
   const [isCatFormVisible, setCatFormVisibile] = useState(false);
   const [isEditForm, setEditForm] = useState(false);
@@ -90,10 +93,13 @@ function ProductForm() {
       formData.append("prod_name", product.prod_name);
       formData.append("prod_desc", product.prod_desc);
       formData.append("prod_price", product.prod_price);
+      formData.append("modelNo", product.modelNo);
+      formData.append("frameColor", product.frameColor);
+      formData.append("frameWidth", product.frameWidth);
       formData.append("prod_category", product.prod_category);
       formData.append("quantity", product.quantity);
 
-      console.log(product);
+      console.log("product",product);
       await axios.post(
         "http://localhost:8080/api/v1/products/addProducts",
         formData,
@@ -257,6 +263,47 @@ function ProductForm() {
                 />
               </div>
               <div className="form-inputs">
+                <label htmlFor="modelNo">Model No:</label>
+                <input
+                  type="text"
+                  id="modelNo"
+                  name="modelNo"
+                  value={product.modelNo}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="frameColor">Frame Color:</label>
+                <select
+                  type="text"
+                  id="frameColor"
+                  name="frameColor"
+                  value={product.frameColor}
+                  onChange={handleInputChange}
+                  defaultValue={"Black"}
+                >
+                  <option value="Black">Black</option>
+                  <option value="Grey">Grey</option>
+                  <option value="White">White</option>
+                </select>
+              </div>
+              <div className="form-inputs">
+                <label htmlFor="frameWidth">Frame Width:</label>
+                <select
+                  id="frameWidth"
+                  name="frameWidth"
+                  value={product.frameWidth}
+                  onChange={handleInputChange}
+                  defaultValue={"125mm"}
+                >
+
+                  <option value="125mm">125mm</option>
+                  <option value="126mm">126mm</option>
+                  <option value="127mm">127mm</option>
+                  <option value="128mm">128mm</option>
+                </select>
+              </div>
+              <div className="form-inputs">
                 <label htmlFor="prod_category">Product Category:</label>
                 <select
                   name="prod_category"
@@ -286,33 +333,38 @@ function ProductForm() {
                 />
               </div>
               <div className="sub-btn">
-              <button type="submit" onClick={handleSubmit}>Add Product</button>
+                <button type="submit" onClick={handleSubmit}>
+                  Add Product
+                </button>
               </div>
             </div>
           </div>
         )}
         {isCatFormVisible && (
           <div className="category-blur">
-              <div className="category-form">
-                <div className="cat-heading">
+            <div className="category-form">
+              <div className="cat-heading">
                 <h3>Add Category</h3>
                 <button type="submit" className="btnrst" onClick={resetForm}>
                   <i className="fas fa-times"></i>
                 </button>
               </div>
-                <div className="catg-input">
-                  <label htmlFor="category">Enter the Category:</label>
-                  <input
-                    type="text"
-                    name="category"
-                    id="category"
-                    onChange={CategoryChange}
-                  />
-                </div>
-                <div className="subt-btn">
-                <button type="submit" onClick={handleCategorySubmit}> Submit </button>
-                </div>  
+              <div className="catg-input">
+                <label htmlFor="category">Enter the Category:</label>
+                <input
+                  type="text"
+                  name="category"
+                  id="category"
+                  onChange={CategoryChange}
+                />
               </div>
+              <div className="subt-btn">
+                <button type="submit" onClick={handleCategorySubmit}>
+                  {" "}
+                  Submit{" "}
+                </button>
+              </div>
+            </div>
           </div>
         )}
 

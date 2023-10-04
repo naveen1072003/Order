@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getAllProducts_Url } from "../constraints/apiUrl";
 import Navbar from "../Navbar";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [prodList, setProductList] = useState([]);
-
   const [headStyle, setheadStyle] = useState({
     head: "all",
   });
@@ -107,16 +107,17 @@ function Home() {
       <div className="products">
         {prodList.map((product) => (
           <div className="product-box">
+            <Link to={'/cart'} state={{data: product}}>
             <div className="prod_img">
-            <img src={"data:image/png;base64," + product.prod_image} alt="" />
+            <img src={"data:image/png;base64," + product.prod_image}  alt="" />
             </div>
             <div className="product-details">
               <div className="details">
                 <label htmlFor="rty">
-                  Product Name: <span>{product.prod_name}</span>
+                  Product Name: <span >{product.prod_name} </span>
                 </label>
                 <label htmlFor="rty">
-                  Price: <span>{product.prod_price}</span>
+                  Price: <span >{product.prod_price}</span>
                 </label>
                 {/* <div className="input-box-wrapper">
                   <label htmlFor="yrt">Quantity:</label>
@@ -125,6 +126,7 @@ function Home() {
               </div>
               {/* <button type="submit">Add to Cart</button>   */}
             </div>
+            </Link>
           </div>
         ))}
       </div>
